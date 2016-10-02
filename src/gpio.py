@@ -35,9 +35,6 @@ def main(argv):
         elif opt in ("-t", "--type"):
             type = arg
     if gpiopin != "":
-        print 'GPIO is "', gpiopin
-        print 'Status is "', status
-        print 'type is "', type
         gpiopin=int(gpiopin)
         status=int(status)
         GPIO.setwarnings(False)
