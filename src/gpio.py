@@ -1,7 +1,8 @@
 '''
 Created on 02-Oct-2016
-@author: ramit
+@author: Ramith Nambiar
 '''
+
 #!/usr/bin/env python
 import RPi.GPIO as GPIO
 import sys, getopt
