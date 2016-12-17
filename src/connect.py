@@ -36,9 +36,10 @@ def gpio(pin):
     }
     return switcher.get(pin, "false")
 
+url=url+"?user="+user+"&serial="+serial+"&hash="+hash
 while True :
     time.sleep(5)
-    url=url+"?user="+user+"&serial="+serial+"&hash="+hash
+    
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
            'Accept-Encoding': 'none',
@@ -47,14 +48,21 @@ while True :
     req = urllib2.Request(url, headers=hdr)
     
     try:
-        response = urllib2.urlopen(req)        
+        response = urllib2.urlopen(req)
         gpiostatus = json.load(response)
-        for val in gpiostatus['Raspberry']:
-            GPIO.setmode(GPIO.BOARD)
-            GPIO.setwarnings(False)
-            gpiopin=int(val['pin_no'])
-            GPIO.setup(gpiopin, GPIO.OUT)
-            GPIO.output(gpiopin,int(val['pin_status']))
+        try:
+            gpiostatus['Raspberry']
+            for val in gpiostatus['Raspberry']:
+                GPIO.setmode(GPIO.BOARD)
+                GPIO.setwarnings(False)
+                gpiopin=int(val['pin_no'])
+                GPIO.setup(gpiopin, GPIO.OUT)
+                GPIO.output(gpiopin,int(val['pin_status']))
+        except Exception, e:
+            print "User Id : " +user
+            print "Hash : " +hash
+            print "Error : "+gpiostatus['Error']
+            sys.exit()
     except URLError, error:
         print "Error Occured"
         time.sleep(100)
