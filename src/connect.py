@@ -44,7 +44,7 @@ def pin(gpio):
     }
     return switcher.get(gpio, "false")
 
-url=url+"/ajax/"+serial+"/view?user="+user+"&hash="+hash+"&connect=1"
+url=url+"/ajax/"+serial+"/view?user="+user+"&hash="+hash+"&connected=1"
 
 while True :
     time.sleep(2)
